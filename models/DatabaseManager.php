@@ -88,6 +88,7 @@ class DatabaseManager
 
         $this->databaseConnection->commit();
 
+
     }
 
 
