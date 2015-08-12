@@ -66,6 +66,11 @@ $(function() {
         });
     });
 
+    $("#clear").click(function(){
+        clearFormFields();
+        clearErrorFields();
+    });
+
     // error messages toggle
     function showHideErrorMessage(field, message){
         if (message !== ""){
@@ -91,9 +96,8 @@ $(function() {
         $("#confirm").val("");
         $("#phone").val("");
         $("#invite").val("");
-        $("#sel1").val("default");
         $("#sel2").val("default");
-
+        $("#sel1").val("default");
     }
 
 

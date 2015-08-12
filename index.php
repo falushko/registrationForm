@@ -90,7 +90,7 @@ $result = $dbManager->getCountries();
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
                                         <select name="city" class="form-control" id="sel2">
-                                            <option value="" disabled selected>Город</option>
+                                            <option value="default" selected>Город</option>
                                         </select>
                                     </div>
                                     <div class="input-group">
