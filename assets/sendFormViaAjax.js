@@ -31,41 +31,34 @@ $(function() {
 
                 //inflate selector with correspond cities
                 for(var i = 0, length = parsed.length; i < length; i++){
-                    console.log(parsed[i].id_city);
                     cities.append("<option value=\"" + parsed[i].id_city + "\">" + parsed[i].city_name +"</option>>");
                 }
             }
         );
     });
 
-
+    //send form
     $('#send').click(function(){
 
         var data = $('form').serialize();
 
         $.post('controllers/controller.php', data, function(result){
-            var res = JSON.parse(result);
-                $("#success").show();
-            console.log(result);
+
+            if(result === "success") {
+                console.log(result);
+                $("#success").fadeIn(300, function () {
+                    setTimeout(function () {
+                        $("#success").fadeOut(300);
+                    }, 1500);
+
+                });
+            }else{
+                var res = JSON.parse(result);
+                console.log(res);
+            }
 
         });
     });
-
-    function isErrorMessageEmpty(message){
-        if (message.Login !== ""){
-            return false;
-        }else if (message.password !== ""){
-            return false;
-        }else if (message.phone !== ""){
-            return false;
-        }else if (message.invite !== ""){
-            return false;
-        }else {
-            return true;
-        }
-    }
-
-
 
     // Attach function to the 'submit' event of the form
     $('#form').submit(function() {

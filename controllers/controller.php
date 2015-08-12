@@ -76,7 +76,9 @@ $dbManager = new \models\DatabaseManager();
 
     if($isValidationPassed){
         $dbManager->insertNewUser($login, $pass, $phone, $_POST["city"], $invite);
+        echo "success";
+        exit;
     }
 
-    //echo json_encode($errors);
-    echo json_encode($_POST["city"]);
+    echo json_encode($errors);
+
