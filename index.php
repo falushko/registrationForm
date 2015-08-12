@@ -59,24 +59,27 @@ $result = $dbManager->getCountries();
                                 <form role="form" name="form">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                                        <input name="login" type="text" class="form-control" placeholder="Логин" required autofocus />
+                                        <input id="login" name="login" type="text" class="form-control" placeholder="Логин" required autofocus />
                                     </div>
+                                    <p class="errorMessage" id="loginError">error</p>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                                        <input name="pass" type="password" class="form-control" placeholder="Пароль" required />
+                                        <input id="pass" name="pass" type="password" class="form-control" placeholder="Пароль" required />
                                     </div>
+                                    <p class="errorMessage" id="passError">error</p>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                                        <input name="confirm" type="password" class="form-control" placeholder="Еще раз пароль" required autofocus />
+                                        <input id="confirm" name="confirm" type="password" class="form-control" placeholder="Еще раз пароль" required autofocus />
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-                                        <input name="phone" type="text" class="form-control" placeholder="Телефон" required />
+                                        <input id="phone" name="phone" type="text" class="form-control" placeholder="Телефон" required />
                                     </div>
+                                    <p class="errorMessage" id="phoneError">error</p>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>
                                         <select name="country" class="form-control" id="sel1">
-                                            <option value="" disabled selected>Страна</option>
+                                            <option value="default" selected>Страна</option>
                                             <?php
                                             foreach ($result as $key => $value) {
                                                 echo "<option value='{$value["id_country"]}'>{$value["country_name"]}</option>";
@@ -92,8 +95,9 @@ $result = $dbManager->getCountries();
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-plus"></span></span>
-                                        <input name="invite" type="text" class="form-control" placeholder="Инвйат" required />
+                                        <input id="invite" name="invite" type="text" class="form-control" placeholder="Инвйат" required />
                                     </div>
+                                    <p class="errorMessage" id="inviteError">error</p>
 
                                 </form>
 

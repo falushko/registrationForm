@@ -27,7 +27,7 @@ $(function() {
                 // clear previous datas
                 $('#sel2 option').remove();
                 var cities = $('#sel2');
-                cities.append("<option value=\"\" disabled selected>" + "Город" + "</option>>");
+                cities.append("<option value=\"default\" selected>" + "Город" + "</option>>");
 
                 //inflate selector with correspond cities
                 for(var i = 0, length = parsed.length; i < length; i++){
@@ -52,13 +52,54 @@ $(function() {
                     }, 1500);
 
                 });
+                clearErrorFields();
+                clearFormFields();
             }else{
                 var res = JSON.parse(result);
-                console.log(res);
+
+                showHideErrorMessage($("#loginError"), res.login);
+                showHideErrorMessage($("#passError"), res.password);
+                showHideErrorMessage($("#phoneError"), res.phone);
+                showHideErrorMessage($("#inviteError"), res.invite);
             }
 
         });
     });
+
+    // error messages toggle
+    function showHideErrorMessage(field, message){
+        if (message !== ""){
+            field.text(message);
+            field.show();
+        } else{
+            field.hide();
+        }
+    }
+
+    // clear all error fields
+    function clearErrorFields(){
+        $("#loginError").hide();
+        $("#passError").hide();
+        $("#phoneError").hide();
+        $("#inviteError").hide();
+    }
+
+    //clear form fields
+    function clearFormFields(){
+        $("#login").val("");
+        $("#pass").val("");
+        $("#confirm").val("");
+        $("#phone").val("");
+        $("#invite").val("");
+        $("#sel1").val("default");
+        $("#sel2").val("default");
+
+    }
+
+
+
+
+
 
     // Attach function to the 'submit' event of the form
     $('#form').submit(function() {

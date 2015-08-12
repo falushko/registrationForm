@@ -16,7 +16,7 @@ $dbManager = new \models\DatabaseManager();
     $loginError = "";
 
     if(!preg_match("/^[A-Za-z0-9]{5,20}$/", $login)){
-        $loginError = "Логин должен быть от 5 до 20 символов. Используйте буквы латинского алфавита и цифры";
+        $loginError = "Используте от 5 до 20 латинских символов или цифр";
         $isValidationPassed = false;
     } elseif($dbManager->isLoginUsedAlready($login)){
         $isValidationPassed = false;
@@ -31,7 +31,7 @@ $dbManager = new \models\DatabaseManager();
     $passError = "";
 
     if(!preg_match("/^[A-Za-z0-9]{5,20}$/", $pass)){
-        $passError = "Пароль должен быть от 5 до 20 символов. Используйте буквы латинского алфавита и цифры";
+        $passError = "Используте от 5 до 20 латинских символов или цифр";
         $isValidationPassed = false;
     } elseif($pass !== $confirm){
         $passError = "Пароли должны совпадать";

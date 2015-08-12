@@ -67,3 +67,10 @@ body {
 #success{
     display: none;
 }
+
+.errorMessage{
+    margin-top: -27px;
+    color: #c12e2a;
+    font-size: 12px;
+    display: none;
+}
