@@ -8,6 +8,7 @@ function clearData($data){
 
 $dbManager = new \models\DatabaseManager();
 
+    $isValidationPassed = true;
     $errors = array();
 
     // validate login
@@ -16,7 +17,9 @@ $dbManager = new \models\DatabaseManager();
 
     if(!preg_match("/^[A-Za-z0-9]{5,20}$/", $login)){
         $loginError = "Логин должен быть от 5 до 20 символов. Используйте буквы латинского алфавита и цифры";
+        $isValidationPassed = false;
     } elseif($dbManager->isLoginUsedAlready($login)){
+        $isValidationPassed = false;
         $loginError = "Такой логин уже существует";
     }
 
@@ -29,8 +32,10 @@ $dbManager = new \models\DatabaseManager();
 
     if(!preg_match("/^[A-Za-z0-9]{5,20}$/", $pass)){
         $passError = "Пароль должен быть от 5 до 20 символов. Используйте буквы латинского алфавита и цифры";
+        $isValidationPassed = false;
     } elseif($pass !== $confirm){
         $passError = "Пароли должны совпадать";
+        $isValidationPassed = false;
     }
 
     $errors += array("password" => $passError);
@@ -38,14 +43,12 @@ $dbManager = new \models\DatabaseManager();
     //validate phone
     $phone = clearData($_POST['phone']);
     $phoneError = "";
-
-
-    // ^\+\d\d\s\([\d]{3}\)\s[\d]{3}-[\d]{2}-[\d]{2}$ ready for first format
-    // /^\({0,1}[\d]{3}\){0,1}\s[\d]{3}\s[\d]{2}\s[\d]{2}$/ ready for two others format
+    // todo clear phone from any symbols except digits
 
     if(!preg_match('/^(\+\d\d\s\([\d]{3}\)\s[\d]{3}-[\d]{2}-[\d]{2})'
     . '|(\({0,1}[\d]{3}\){0,1}\s[\d]{3}\s[\d]{2}\s[\d]{2})$/', $phone)){
         $phoneError = "Некорректный номер. Введите номер в формате +38 (093) 937-99-92, 093 937 99 92, (093) 937 99 92";
+        $isValidationPassed = false;
     }
 
     $errors += array("phone" => $phoneError);
@@ -58,19 +61,22 @@ $dbManager = new \models\DatabaseManager();
 
     if(!preg_match("/^[0-9]{6}$/", $invite)){
        $inviteError = "Введите 6 цифр";
+        $isValidationPassed = false;
     } elseif($isUsed === 1){
         $inviteError = "Несуществующий инвайт";
+        $isValidationPassed = false;
     } elseif($isUsed === 2){
         $inviteError = "Инвайт уже занят";
+        $isValidationPassed = false;
     }
 
     $errors += array("invite" => $inviteError);
 
     $result = empty($errors) ? 'success' : 'errors';
 
-    if(empty($errors)){
-
+    if($isValidationPassed){
         $dbManager->insertNewUser($login, $pass, $phone, $_POST["city"], $invite);
     }
 
-    echo json_encode($errors);
+    //echo json_encode($errors);
+    echo json_encode($_POST["city"]);

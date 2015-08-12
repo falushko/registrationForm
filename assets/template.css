@@ -59,3 +59,11 @@ body {
 .panel-body {
     padding: 30px 30px 0 30px;
 }
+
+.alert-success {
+    width: 400px;
+}
+
+#success{
+    display: none;
+}

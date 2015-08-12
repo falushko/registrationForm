@@ -79,7 +79,7 @@ $result = $dbManager->getCountries();
                                             <option value="" disabled selected>Страна</option>
                                             <?php
                                             foreach ($result as $key => $value) {
-                                                echo "<option value='{$value["country_name"]}'>{$value["country_name"]}</option>";
+                                                echo "<option value='{$value["id_country"]}'>{$value["country_name"]}</option>";
                                             }
                                             ?>
                                         </select>
@@ -107,7 +107,7 @@ $result = $dbManager->getCountries();
                     </div>
                 </div>
 
-
+        <div id="success" class="alert alert-success" role="alert">Спасибо за регистрацию!</div>
     </div>
 
 </div> <!-- container end -->

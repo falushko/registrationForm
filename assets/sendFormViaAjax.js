@@ -17,22 +17,22 @@
 // Shortcut to $(document).ready()
 $(function() {
 
-
     // cities ajax inflater
     $('#sel1').change(function(){
-        var country = $("#sel1 :selected").text();
-        $.post('controllers/citiesInflater.php', "country="+country , function(data){
+        var id_country = $("#sel1 :selected").val();
+        $.post('controllers/citiesInflater.php', "country="+id_country , function(data){
                 // get formatted data
                 var parsed = JSON.parse(data);
 
-                // clear previous data
+                // clear previous datas
                 $('#sel2 option').remove();
                 var cities = $('#sel2');
                 cities.append("<option value=\"\" disabled selected>" + "Город" + "</option>>");
 
                 //inflate selector with correspond cities
                 for(var i = 0, length = parsed.length; i < length; i++){
-                    cities.append("<option>" + parsed[i] + "</option>>");
+                    console.log(parsed[i].id_city);
+                    cities.append("<option value=\"" + parsed[i].id_city + "\">" + parsed[i].city_name +"</option>>");
                 }
             }
         );
@@ -45,11 +45,25 @@ $(function() {
 
         $.post('controllers/controller.php', data, function(result){
             var res = JSON.parse(result);
-            console.log(res);
+                $("#success").show();
+            console.log(result);
 
         });
     });
 
+    function isErrorMessageEmpty(message){
+        if (message.Login !== ""){
+            return false;
+        }else if (message.password !== ""){
+            return false;
+        }else if (message.phone !== ""){
+            return false;
+        }else if (message.invite !== ""){
+            return false;
+        }else {
+            return true;
+        }
+    }
 
 
 

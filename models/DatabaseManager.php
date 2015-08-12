@@ -50,40 +50,39 @@ class DatabaseManager
 
     //get all countries to inflate selector
     public function getCountries(){
-        $stmt = $this->databaseConnection->prepare("SELECT country_name FROM countries");
+        $stmt = $this->databaseConnection->prepare("SELECT id_country, country_name FROM countries");
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
     //get cities for specified country to inflate selector
-    public function getCities($countryName){
-        $stmt = $this->databaseConnection->prepare("SELECT city_name FROM cities WHERE id_country =
-                  (SELECT id_country FROM countries WHERE country_name = :countryName)");
+    public function getCities($id_country){
+        $stmt = $this->databaseConnection->prepare("SELECT id_city, city_name FROM cities WHERE id_country = :countryName");
 
-        $stmt->bindParam(':countryName', $countryName);
+        $stmt->bindParam(':countryName', $id_country);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
     //insert new user into DB and update invite status
-    public function insertNewUser($login, $pass, $phone, $city, $invite){
+    public function insertNewUser($login, $pass, $phone, $id_city, $invite){
 
         $currentTime = time();
         $md5pass = md5($pass);
         $this->databaseConnection->beginTransaction();
         $stmt = $this->databaseConnection->prepare("INSERT INTO users (login, password, phone, id_city, invite)"
-                                                . " VALUES (:login, :password, :phone, (SELECT id_city FROM cities WHERE city_name = :city), :invite)");
+                                                . " VALUES (:login, :password, :phone, :id_city, :invite)");
         $stmt->bindParam(":login", $login);
         $stmt->bindParam(":password", $md5pass);
         $stmt->bindParam(":phone", $phone);
-        $stmt->bindParam(":city", $city);
+        $stmt->bindParam(":id_city", $id_city);
         $stmt->bindParam(":invite", $invite);
         $stmt->execute();
 
 
-        /*$stmtInvite = $this->databaseConnection->prepare("UPDATE invites SET status = 1, date_status_ = $currentTime WHERE invite = :invite");
+        $stmtInvite = $this->databaseConnection->prepare("UPDATE invites SET status = 1, date_status_ = $currentTime WHERE invite = :invite");
         $stmtInvite->bindParam(":invite", $invite);
-        $stmtInvite->execute();*/
+        $stmtInvite->execute();
 
 
         $this->databaseConnection->commit();
