@@ -74,12 +74,9 @@ $dbManager = new \models\DatabaseManager();
 
     $result = empty($errors) ? 'success' : 'errors';
 
+
     if($isValidationPassed){
-        $phone = str_replace('+', '', $phone);
-        $phone = str_replace('(', '', $phone);
-        $phone = str_replace(')', '', $phone);
-        $phone = str_replace(' ', '', $phone);
-        $phone = str_replace('-', '', $phone);
+        $phone = preg_replace('/[\D]/', '', $phone);
         $dbManager->insertNewUser($login, $pass, $phone, $_POST["city"], $invite);
         echo "success";
         exit;
