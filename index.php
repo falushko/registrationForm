@@ -38,8 +38,8 @@ $result = $dbManager->getCountries();
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Registration</a></li>
-            <li><a href="#about">Members</a></li>
-            <li><a href="#contact">Invites</a></li>
+            <li><a href="users.php">Members</a></li>
+            <li><a href="invites.php">Invites</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

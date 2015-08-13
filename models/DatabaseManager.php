@@ -79,16 +79,30 @@ class DatabaseManager
         $stmt->bindParam(":invite", $invite);
         $stmt->execute();
 
-
         $stmtInvite = $this->databaseConnection->prepare("UPDATE invites SET status = 1, date_status_ = $currentTime WHERE invite = :invite");
         $stmtInvite->bindParam(":invite", $invite);
         $stmtInvite->execute();
-
 
         $this->databaseConnection->commit();
 
 
     }
 
+    // get all users with cities
+    public function getAllUsers(){
+        $stmt = $this->databaseConnection->prepare("SELECT users.login, users.phone, users.invite, cities.city_name, invites.date_status_
+                                                    FROM users
+                                                    LEFT JOIN cities ON users.id_city = cities.id_city
+                                                    LEFT JOIN invites ON users.invite = invites.invite");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // get invites
+    public function getInvites(){
+        $stmt = $this->databaseConnection->prepare("SELECT invite, status FROM invites");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }

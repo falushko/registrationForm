@@ -74,3 +74,15 @@ body {
     font-size: 12px;
     display: none;
 }
+
+.panel-primary#users{
+    width: 700px;
+}
+
+.panel-primary#invites{
+    width: 300px;
+}
+
+thead{
+    font-weight: bold;
+}

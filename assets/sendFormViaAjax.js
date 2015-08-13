@@ -53,7 +53,7 @@ $(function() {
 
                 });
                 clearErrorFields();
-                clearFormFields();
+                //clearFormFields();
             }else{
                 var res = JSON.parse(result);
 
