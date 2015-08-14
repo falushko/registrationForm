@@ -1,14 +1,19 @@
 <?php
 
+// data validation and saving controller
+
 include '..\\models\\DatabaseManager.php';
 
 function clearData($data){
     return trim(strip_tags($data));
 }
 
+
 $dbManager = new \models\DatabaseManager();
 
     $isValidationPassed = true;
+
+    // array for errors to return
     $errors = array();
 
     // validate login
@@ -43,7 +48,6 @@ $dbManager = new \models\DatabaseManager();
     //validate phone
     $phone = clearData($_POST['phone']);
     $phoneError = "";
-    // todo clear phone from any symbols except digits
 
     if(!preg_match('/^(\+\d\d\s\([\d]{3}\)\s[\d]{3}-[\d]{2}-[\d]{2})'
     . '|(\({0,1}[\d]{3}\){0,1}\s[\d]{3}\s[\d]{2}\s[\d]{2})$/', $phone)){
@@ -60,7 +64,7 @@ $dbManager = new \models\DatabaseManager();
     $isUsed = $dbManager->isInviteUsedAlready($invite);
 
     if(!preg_match("/^[0-9]{6}$/", $invite)){
-       $inviteError = "Введите 6 цифр";
+        $inviteError = "Введите 6 цифр";
         $isValidationPassed = false;
     } elseif($isUsed === 1){
         $inviteError = "Несуществующий инвайт";
@@ -72,15 +76,19 @@ $dbManager = new \models\DatabaseManager();
 
     $errors += array("invite" => $inviteError);
 
+    // check errors array on emptiness
     $result = empty($errors) ? 'success' : 'errors';
 
 
     if($isValidationPassed){
+        // clear phone from not numbers
         $phone = preg_replace('/[\D]/', '', $phone);
+        // insert data into database
         $dbManager->insertNewUser($login, $pass, $phone, $_POST["city"], $invite);
         echo "success";
         exit;
     }
 
+    // return errors array via AJAX
     echo json_encode($errors);
 
